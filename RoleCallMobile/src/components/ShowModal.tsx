@@ -32,7 +32,7 @@ export function ShowModal({ showId, visible, onClose, onShowPress }: ShowModalPr
   const [loading, setLoading] = useState(false);
   const [hideSeen, setHideSeen] = useState(false);
 
-  const { likeShow, unlikeShow, isShowLiked, likedShowIds, hiddenShowIds, hideShow } =
+  const { likeShow, unlikeShow, isShowLiked, likedShowIds, hiddenShowIds, hideShow, isShowHidden } =
     useAppStore();
 
   useEffect(() => {
@@ -60,6 +60,7 @@ export function ShowModal({ showId, visible, onClose, onShowPress }: ShowModalPr
   };
 
   const isLiked = showId ? isShowLiked(showId) : false;
+  const isHidden = showId ? isShowHidden(showId) : false;
 
   const handleLike = useCallback(() => {
     if (!showId) return;
@@ -75,6 +76,13 @@ export function ShowModal({ showId, visible, onClose, onShowPress }: ShowModalPr
       Linking.openURL(`https://www.imdb.com/title/${showId}/`);
     }
   }, [showId]);
+
+  const handleHideShow = useCallback(() => {
+    if (showId) {
+      hideShow(showId);
+      onClose();
+    }
+  }, [showId, hideShow, onClose]);
 
   const handleRelatedShowPress = useCallback(
     (relatedShowId: string) => {
@@ -126,16 +134,25 @@ export function ShowModal({ showId, visible, onClose, onShowPress }: ShowModalPr
           <TouchableOpacity onPress={onClose} style={styles.closeButton}>
             <Ionicons name="close" size={28} color="#fff" />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={handleLike}
-            style={[styles.likeButton, isLiked && styles.likeButtonActive]}
-          >
-            <Ionicons
-              name={isLiked ? 'heart' : 'heart-outline'}
-              size={24}
-              color={isLiked ? '#ff4444' : '#fff'}
-            />
-          </TouchableOpacity>
+          <View style={styles.headerRight}>
+            <TouchableOpacity onPress={handleHideShow} style={styles.hideShowButton}>
+              <Ionicons
+                name={isHidden ? 'eye-off' : 'eye-off-outline'}
+                size={26}
+                color={isHidden ? '#ff4444' : '#fff'}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleLike}
+              style={[styles.likeButton, isLiked && styles.likeButtonActive]}
+            >
+              <Ionicons
+                name={isLiked ? 'heart' : 'heart-outline'}
+                size={24}
+                color={isLiked ? '#ff4444' : '#fff'}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
 
         {loading ? (
@@ -364,7 +381,15 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 8,
   },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
   closeButton: {
+    padding: 4,
+  },
+  hideShowButton: {
     padding: 4,
   },
   likeButton: {

@@ -16,6 +16,8 @@ import { useAppStore } from '../store';
 interface ShowCardProps {
   show: Show;
   onPress: (show: Show) => void;
+  onLike?: (showId: string) => void;
+  onHide?: (showId: string) => void;
   showLikeButton?: boolean;
   showHideButton?: boolean;
   size?: 'small' | 'medium' | 'large';
@@ -32,6 +34,8 @@ const CARD_SIZES = {
 export function ShowCard({
   show,
   onPress,
+  onLike,
+  onHide,
   showLikeButton = true,
   showHideButton = false,
   size = 'medium',
@@ -47,12 +51,14 @@ export function ShowCard({
       unlikeShow(show.id);
     } else {
       likeShow(show.id);
+      onLike?.(show.id);
     }
-  }, [isLiked, show.id, likeShow, unlikeShow]);
+  }, [isLiked, show.id, likeShow, unlikeShow, onLike]);
 
   const handleHide = useCallback(() => {
     hideShow(show.id);
-  }, [show.id, hideShow]);
+    onHide?.(show.id);
+  }, [show.id, hideShow, onHide]);
 
   const handlePress = useCallback(() => {
     onPress(show);
