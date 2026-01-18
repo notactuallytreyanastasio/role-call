@@ -1,0 +1,114 @@
+[
+  {
+    "hash": "26b2efe918f79adb32ff46eac55ce24d40231643",
+    "short_hash": "26b2efe",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:44:05-05:00",
+    "message": "feat(mobile): Wire up App.tsx with navigation and modal\n\nMain app entry point integration:\n- React Navigation with bottom tabs\n- Three tabs: Search, Discover, Liked\n- Ionicons for tab bar icons\n- Dark theme configuration\n- Database initialization on startup\n- Loading state with spinner\n- Error state handling\n- ShowModal rendered at root level\n- Tab bar styling (dark background)\n\nApp is now fully functional end-to-end.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
+    "hash": "70b94fa9ab2bcd198187f110abc942d11e414deb",
+    "short_hash": "70b94fa",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:43:55-05:00",
+    "message": "feat(mobile): Add LikedScreen for user's collection\n\nUser's liked shows management:\n- \"Add Shows\" search section at top\n- Horizontal \"Recommended For You\" carousel\n- Grid of all liked shows with remove button\n- \"Start fresh\" to clear all data (with confirmation)\n- Show count in subtitle\n- Empty state encouraging discovery\n\nThird tab - manage and review liked shows.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 2
+  },
+  {
+    "hash": "84d3e11a47d077b0e0acb799ca4b6acdfba6fcec",
+    "short_hash": "84d3e11",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:43:45-05:00",
+    "message": "feat(mobile): Add DiscoverScreen with recommendations\n\nPersonalized \"For You\" recommendations tab:\n- If user has liked shows: writer-based recommendations\n- If no likes yet: random high-rated shows with prompt\n- Shows connection info (which writers link shows)\n- \"Show different\" refresh button\n- Pull-to-refresh support\n- Empty state with guidance\n- Subtitle shows count of liked shows\n\nCore value prop of the app - discovery through writers.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
+    "hash": "a29f1ad751d0edd9e92fba6b122032112378e8e8",
+    "short_hash": "a29f1ad",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:43:34-05:00",
+    "message": "feat(mobile): Add SearchScreen tab\n\nSearch and discovery interface:\n- Debounced text search (150ms delay)\n- FlatList grid of search results\n- \"Discover something new\" shuffle section\n- 6 random high-rated shows\n- \"Show me more\" refresh button\n- Session tracking to avoid repeats\n- Clear search button\n\nFirst tab in navigation - entry point for finding shows.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
+    "hash": "ed88dcb624ec61a672665453e1783ed5b342ab70",
+    "short_hash": "ed88dcb",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:43:25-05:00",
+    "message": "feat(mobile): Add ShowModal detail view\n\nFull-screen modal for show details:\n- Hero section with poster, title, year, rating, genres\n- Description text\n- Crew sections (creators, writers, directors)\n- Related shows by shared writers\n  - Strong connections (3+ shared crew)\n  - Weak connections (1-2 shared crew)\n- \"Hide seen\" toggle for filtering\n- IMDB external link button\n- Like/unlike in header\n\nUses React Native Modal with slide animation.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 2
+  },
+  {
+    "hash": "a33ad166d8a2b6c69a95ee5beb19573bf98565fe",
+    "short_hash": "a33ad16",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:43:14-05:00",
+    "message": "feat(mobile): Add ShowCard component\n\nReusable show thumbnail card for grids:\n- Responsive sizing (small/medium/large variants)\n- IMDB rating badge overlay\n- Like/unlike heart button with animation\n- Hide button for filtering\n- Placeholder for missing images\n- TouchableOpacity for press handling\n\nStyled for dark theme with rounded corners.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
+    "hash": "52ee2258a05dc2f414e2b389973fb8682b93ed07",
+    "short_hash": "52ee225",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:42:57-05:00",
+    "message": "feat(mobile): Add Zustand state management with persistence\n\nGlobal state using Zustand:\n- likedShowIds: Set of shows user has liked\n- hiddenShowIds: Shows hidden from recommendations\n- sessionShownIds: Avoid repeats within session\n- selectedShowId: Current modal show\n- onboardingCompleted: First-run flag\n\nFeatures:\n- AsyncStorage persistence via zustand/middleware\n- Custom Set serialization (JSON doesn't support Sets)\n- Selector hooks for performance optimization\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 2
+  },
+  {
+    "hash": "f145d2970dcb869985204ac005c5109e5b0d06db",
+    "short_hash": "f145d29",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:42:43-05:00",
+    "message": "feat(mobile): Add writer-based recommendation algorithm\n\nCore recommendation logic:\n- getRecommendations: Find shows by writers from liked shows\n  1. Get writers/creators from user's liked shows\n  2. Find all shows by those writers\n  3. Rank by overlap count + IMDB rating\n  4. Return with connection details\n\n- getRecommendationsForPerson: Shows by specific writer\n- getTopWriters: Most prolific writers in liked shows\n\nAlgorithm prioritizes creators (3.0x) and writers (2.5x).\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 2
+  },
+  {
+    "hash": "bb90763b939259ba8b7990c9ca2e17722eb80ca6",
+    "short_hash": "bb90763",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:42:30-05:00",
+    "message": "feat(mobile): Add SQLite database query layer\n\nImperative shell - database I/O operations:\n- initDatabase: Copy bundled DB to document dir, open connection\n- searchShows: Full-text search with LIKE queries\n- getShow, getShowsByIds: Single/batch show retrieval\n- getRandomShows: Discovery with rating filter\n- getShowCredits, getShowWithCredits: Join queries\n- getRelatedShows: Find shows by shared crew members\n\nUses expo-sqlite with new Expo File System API.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
+    "hash": "c445f935ee874473f2359d2242c768db61d21c03",
+    "short_hash": "c445f93",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:42:14-05:00",
+    "message": "feat(mobile): Add pure database mapping functions\n\nFunctional core - pure functions with no side effects:\n- mapShowRow: DB row -> Show domain type\n- mapPersonRow: DB row -> Person domain type\n- mapCreditRow: DB row -> Credit domain type\n- parseJsonArray: Safe JSON parsing with fallback\n- getThumbnailUrl: IMDB image URL resizing\n\nThese mappers isolate data transformation from I/O.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 1
+  },
+  {
+    "hash": "e30c860e1d6ed9e5469f9e9d59eb901e571c6c3d",
+    "short_hash": "e30c860",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:42:01-05:00",
+    "message": "feat(mobile): Add TypeScript domain types\n\nDefine strict types for the domain model:\n- Show, Person, Credit interfaces\n- CreditRole union type (creator|writer|director|actor)\n- ShowRow, PersonRow, CreditRow for DB mapping\n- Recommendation and RelatedShow types\n- ROLE_WEIGHTS constants for scoring\n\nNo `any` types - fully typed throughout.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 2
+  },
+  {
+    "hash": "e51dbb23a04c42aa579d98767948d67dda7d651e",
+    "short_hash": "e51dbb2",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T08:41:42-05:00",
+    "message": "feat(mobile): Initialize Expo project with TypeScript\n\n- Create blank TypeScript Expo project\n- Configure app.json with dark theme and SQLite plugin\n- Add metro.config.js to handle .db asset files\n- Bundle role_call.db (17k+ shows) in assets\n\nTech choices:\n- Expo SDK 54 (managed workflow)\n- TypeScript strict mode\n- Dark UI theme (#0a0a0a background)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 12
+  },
+  {
+    "hash": "152122e157a1428bfe3eef918aaab2ddd0405f96",
+    "short_hash": "152122e",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T03:15:53-05:00",
+    "message": "chore: Add web platform dependencies\n\nAdds react-dom and react-native-web for web platform support.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 2
+  },
+  {
+    "hash": "9b740b91d1d14b5b47064fe769f7b0216e5a6b50",
+    "short_hash": "9b740b9",
+    "author": "YOUR_NAME_HERE",
+    "date": "2026-01-18T03:14:27-05:00",
+    "message": "feat: Add React Native mobile app for Role Call\n\nInitial implementation of the Role Call TV show recommendation app as a\nReact Native/Expo mobile application. Features:\n\n- Three-tab navigation (Search, Discover, Liked)\n- SQLite database with 17k+ shows\n- Writer-based recommendation algorithm\n- TypeScript with strict typing\n- Zustand for state management with AsyncStorage persistence\n- Show detail modal with related shows\n\nTech stack:\n- Expo SDK 54\n- React Navigation (bottom tabs)\n- expo-sqlite for database\n- Zustand for state\n- @expo/vector-icons for icons\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>",
+    "files_changed": 28
+  }
+]
