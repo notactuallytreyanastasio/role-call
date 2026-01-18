@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { initDatabase } from './src/db';
 import { useAppStore } from './src/store';
-import { SearchScreen, DiscoverScreen, LikedScreen } from './src/screens';
+import { SearchScreen, DiscoverScreen, LikedScreen, OnboardingScreen } from './src/screens';
 import { ShowModal } from './src/components';
 import type { Show } from './src/types';
 
@@ -33,7 +33,7 @@ export default function App() {
   const [dbReady, setDbReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { selectedShowId, setSelectedShow, setDbInitialized } = useAppStore();
+  const { selectedShowId, setSelectedShow, setDbInitialized, onboardingCompleted } = useAppStore();
 
   // Initialize database on app start
   useEffect(() => {
@@ -86,6 +86,16 @@ export default function App() {
           </>
         )}
       </View>
+    );
+  }
+
+  // Show onboarding for first-time users
+  if (!onboardingCompleted) {
+    return (
+      <>
+        <StatusBar style="light" />
+        <OnboardingScreen />
+      </>
     );
   }
 
