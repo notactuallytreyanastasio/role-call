@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Role Call",
-    "slug": "RoleCallMobile",
+    "slug": "role-call",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rolecall.mobile"
+      "bundleIdentifier": "com.rolecall.mobile",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -28,11 +31,12 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-font"
     ],
     "extra": {
       "eas": {
-        "projectId": "role-call-mobile"
+        "projectId": "c3ed5a19-6941-400d-9b44-c7855e6fe723"
       }
     }
   }
