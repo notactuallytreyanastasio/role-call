@@ -7,9 +7,11 @@ import {
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
-  SafeAreaView,
   RefreshControl,
+  Platform,
+  StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import type { Show, Recommendation } from '../types';
 import { getRecommendations, getRandomShows } from '../db';
@@ -87,12 +89,76 @@ export function DiscoverScreen({ onShowPress }: DiscoverScreenProps) {
     [onShowPress]
   );
 
+  const replaceShow = useCallback(
+    async (showId: string) => {
+      // Get current show IDs to exclude
+      const currentIds = recommendations.length > 0
+        ? recommendations.map((r) => r.show.id)
+        : fallbackShows.map((s) => s.id);
+
+      const excludeIds = [...hiddenShowIds, ...sessionShownIds, ...currentIds];
+
+      try {
+        if (likedShowIds.size > 0) {
+          // Get one new recommendation
+          const newRecs = await getRecommendations(
+            [...likedShowIds],
+            excludeIds,
+            1
+          );
+          if (newRecs.length > 0) {
+            setRecommendations((prev) => {
+              const filtered = prev.filter((r) => r.show.id !== showId);
+              return [...filtered, newRecs[0]];
+            });
+            markSessionShown([newRecs[0].show.id]);
+          } else {
+            // No more recommendations, just remove
+            setRecommendations((prev) => prev.filter((r) => r.show.id !== showId));
+          }
+        } else {
+          // Get one new random show
+          const newShows = await getRandomShows(1, 7.5, excludeIds);
+          if (newShows.length > 0) {
+            setFallbackShows((prev) => {
+              const filtered = prev.filter((s) => s.id !== showId);
+              return [...filtered, newShows[0]];
+            });
+            markSessionShown([newShows[0].id]);
+          } else {
+            // No more shows, just remove
+            setFallbackShows((prev) => prev.filter((s) => s.id !== showId));
+          }
+        }
+      } catch (error) {
+        console.error('Error replacing show:', error);
+      }
+    },
+    [recommendations, fallbackShows, hiddenShowIds, sessionShownIds, likedShowIds, markSessionShown]
+  );
+
+  const handleShowLiked = useCallback(
+    (showId: string) => {
+      replaceShow(showId);
+    },
+    [replaceShow]
+  );
+
+  const handleShowHidden = useCallback(
+    (showId: string) => {
+      replaceShow(showId);
+    },
+    [replaceShow]
+  );
+
   const renderRecommendation = useCallback(
     ({ item }: { item: Recommendation }) => (
       <View style={styles.recommendationItem}>
         <ShowCard
           show={item.show}
           onPress={handleShowPress}
+          onLike={handleShowLiked}
+          onHide={handleShowHidden}
           showLikeButton
           showHideButton
           size="medium"
@@ -106,7 +172,7 @@ export function DiscoverScreen({ onShowPress }: DiscoverScreenProps) {
         )}
       </View>
     ),
-    [handleShowPress]
+    [handleShowPress, handleShowLiked, handleShowHidden]
   );
 
   const renderFallbackShow = useCallback(
@@ -114,12 +180,14 @@ export function DiscoverScreen({ onShowPress }: DiscoverScreenProps) {
       <ShowCard
         show={item}
         onPress={handleShowPress}
+        onLike={handleShowLiked}
+        onHide={handleShowHidden}
         showLikeButton
         showHideButton
         size="medium"
       />
     ),
-    [handleShowPress]
+    [handleShowPress, handleShowLiked, handleShowHidden]
   );
 
   const keyExtractor = useCallback(
@@ -134,7 +202,7 @@ export function DiscoverScreen({ onShowPress }: DiscoverScreenProps) {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={['top']}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#fff" />
           <Text style={styles.loadingText}>Finding shows for you...</Text>
@@ -147,7 +215,7 @@ export function DiscoverScreen({ onShowPress }: DiscoverScreenProps) {
   const hasFallback = fallbackShows.length > 0;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
         <View>

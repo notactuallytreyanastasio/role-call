@@ -1,5 +1,5 @@
 // SearchScreen - Search and discover shows
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,9 @@ import {
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
-  SafeAreaView,
+  Dimensions,
 } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import type { Show } from '../types';
 import { searchShows, getRandomShows } from '../db';
@@ -20,6 +21,13 @@ interface SearchScreenProps {
   onShowPress: (show: Show) => void;
 }
 
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+const COLUMNS = 3;
+const CARD_HEIGHT = 166; // 150 card + 16 margin
+const SEARCH_BAR_HEIGHT = 72;
+const SHUFFLE_HEADER_HEIGHT = 52;
+const TAB_BAR_HEIGHT = 84;
+
 export function SearchScreen({ onShowPress }: SearchScreenProps) {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Show[]>([]);
@@ -29,17 +37,25 @@ export function SearchScreen({ onShowPress }: SearchScreenProps) {
 
   const { likedShowIds, hiddenShowIds, sessionShownIds, markSessionShown } = useAppStore();
   const searchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const insets = useSafeAreaInsets();
+
+  // Calculate how many shows fit on screen
+  const showCount = useMemo(() => {
+    const availableHeight = SCREEN_HEIGHT - insets.top - insets.bottom - SEARCH_BAR_HEIGHT - SHUFFLE_HEADER_HEIGHT - TAB_BAR_HEIGHT;
+    const rows = Math.floor(availableHeight / CARD_HEIGHT);
+    return Math.max(rows, 2) * COLUMNS; // At least 2 rows
+  }, [insets.top, insets.bottom]);
 
   // Load initial shuffle picks
   useEffect(() => {
     loadShufflePicks();
-  }, []);
+  }, [showCount]);
 
   const loadShufflePicks = async () => {
     setShuffleLoading(true);
     try {
       const excludeIds = [...likedShowIds, ...hiddenShowIds, ...sessionShownIds];
-      const shows = await getRandomShows(6, 7.5, excludeIds);
+      const shows = await getRandomShows(showCount, 7.5, excludeIds);
       setShufflePicks(shows);
       markSessionShown(shows.map((s) => s.id));
     } catch (error) {
@@ -122,7 +138,7 @@ export function SearchScreen({ onShowPress }: SearchScreenProps) {
   const isSearching = query.trim().length > 0;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       {/* Search input */}
       <View style={styles.searchContainer}>
         <View style={styles.searchInputWrapper}>

@@ -7,10 +7,10 @@ import {
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
-  SafeAreaView,
   Alert,
   TextInput,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import type { Show, Recommendation } from '../types';
 import { getShowsByIds, getRecommendations, searchShows } from '../db';
@@ -187,7 +187,7 @@ export function LikedScreen({ onShowPress }: LikedScreenProps) {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={['top']}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#fff" />
         </View>
@@ -196,7 +196,7 @@ export function LikedScreen({ onShowPress }: LikedScreenProps) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <FlatList
         ListHeaderComponent={
           <>
