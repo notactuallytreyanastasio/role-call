@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7B2FF7"/>
+      <stop offset="100%" style="stop-color:#4A0E8F"/>
+    </linearGradient>
+    <linearGradient id="starGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#FFA500"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="220" fill="url(#bgGradient)"/>
+
+  <!-- Film strip left -->
+  <rect x="80" y="200" width="70" height="520" rx="8" fill="rgba(255,255,255,0.12)"/>
+  <rect x="92" y="220" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="92" y="272" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="92" y="324" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="92" y="376" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="92" y="428" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="92" y="480" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="92" y="532" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="92" y="584" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="92" y="636" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="92" y="688" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+
+  <!-- Film strip right -->
+  <rect x="874" y="200" width="70" height="520" rx="8" fill="rgba(255,255,255,0.12)"/>
+  <rect x="886" y="220" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="886" y="272" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="886" y="324" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="886" y="376" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="886" y="428" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="886" y="480" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="886" y="532" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="886" y="584" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="886" y="636" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+  <rect x="886" y="688" width="46" height="36" rx="4" fill="rgba(0,0,0,0.3)"/>
+
+  <!-- Star behind text -->
+  <polygon
+    points="512,120 570,290 750,290 608,400 666,570 512,460 358,570 416,400 274,290 454,290"
+    fill="url(#starGradient)"
+    stroke="#FFE55C"
+    stroke-width="6"
+  />
+
+  <!-- Text: Find New TV -->
+  <text x="512" y="680" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="120" fill="white">Find</text>
+  <text x="512" y="800" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="120" fill="white">New</text>
+  <text x="512" y="920" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="120" fill="white">TV</text>
+
+  <!-- Small accent stars -->
+  <polygon points="240,140 248,165 275,165 254,182 262,207 240,190 218,207 226,182 205,165 232,165" fill="#FFD700" opacity="0.9"/>
+  <polygon points="784,140 792,165 819,165 798,182 806,207 784,190 762,207 770,182 749,165 776,165" fill="#FFD700" opacity="0.9"/>
+</svg>
